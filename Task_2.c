@@ -6,9 +6,10 @@
 
 void copyFile(const char *before, const char *after) {
   int fd = open(before, O_RDONLY);
-  int fd_out = open(after, O_WRONLY | O_CREAT | O_TRUNC);
+  creat(after, S_IRWXU | S_IRWXG | S_IRWXO);
+  int fd_out = open(after, O_WRONLY | O_TRUNC);
   if (fd < 0 || fd_out < 0) {
-    printf("Error: can't open");
+    perror("fail opening\n");
     return;
   }
   int byte_read, buffer_size = 128;
@@ -18,13 +19,16 @@ void copyFile(const char *before, const char *after) {
   }
   free(buffer);
   if (close(fd) < 0 || close(fd_out) < 0) {
-    printf("Error: can't close");
+    perror("fail closing\n");
   }
 }
 
 int main(int argc, char *argv[]) {
   if (argc < 3) {
-    printf("Arguments error\n");
+    printf("how to use:\n");
+    printf("copy file to file: cp file1 file2\n");
+    printf("copy file to catalog: cp file catalog/\n");
+    printf("catalogs from path should be created before\n");
     return 1;
   }
   if (argv[2][strlen(argv[2]) - 1] == '/')
