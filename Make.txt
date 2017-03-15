@@ -1,7 +1,0 @@
-cmake_minimum_required(VERSION 3.1.0)
-project(operating-systems VERSION 0.0.0)
-
-add_executable(Tasks/Task_2.c)
-add_executable(Tasks/Task_3.c)
-add_executable(Tasks/Task_5.c)
-add_executable(Tasks/Task_6.c)
